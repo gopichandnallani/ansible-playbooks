@@ -1,0 +1,52 @@
+install the ansible from the ansible Documentation.
+
+we need to generate the base config for the ansible.
+config file path    => etc/ansible/ansible.cfg
+run the below command to genereate all the configuration
+ansible-config init --disabled > ansible.cfg        =>  this command will helps to creathe all the parameters in configfile.
+
+set up the hostkey authentication between the servers for ansible to reach the clients.
+
+we can run the Ansible in two different ways. 
+    1. using the Adhoc Commands
+    2. using the ansible Playbook.
+
+inventory file format.
+[allservers]
+10.0.0.196
+10.0.0.256
+10.0.0.100
+10.0.0.200
+
+[webservers]
+10.0.0.196
+10.0.0.256
+
+[dbservers]
+10.0.0.100
+10.0.0.200
+
+ansible -i clients all -shell touch /etc/hello1 => this will through an error because this requires an root privilages to create a file under /etc folder.
+
+ansible -i clients all -shell touch /etc/hello1 --become => --become helps to create a file with root privilages.
+
+ansible-playbook -i clients ansible/plabook.yaml --syntax-check     => it will perform the syntax check.
+
+
+all the plays will run when you run the playbook. even if there no changes available also.
+to prevent that thing from happening we need t create a  handlers in a playbook.
+we need to attach notify to the tasks and add the handler to the service which you want to run when there's changes in required services.
+
+
+Declareing a varibale 
+variable precedence ==> if we provide --extra-vars in the command then value written in the Playbook will be overwritten by the value provided by the command.
+we can overwrite he varible vaue sending different value from the command, below is the Commands
+
+ansible-playbook -i clients vars.yaml --extra-vars cloud1=india
+
+Gather facts
+setup module 
+command to run the setup module. ===>  "ansible -i clients all -m setup"
+
+we can provide the interactive inputs in the playbooks.
+we need to use the "vars_prompt" variable to read the input from the user.

@@ -1,0 +1,17 @@
+---
+- name: Play for installing the Nginx
+  hosts: all
+  vars:
+    cloud1: "aws" 
+    cloud2: "azure"
+    cloud3: "gcp"
+  tasks: 
+  - name: performing apt update
+    shell:  apt update 
+
+  - name: Print return information from the previous task
+    debug:
+      msg:
+        - "{{ cloud1 }}"
+        - "{{ cloud2 }}"
+        - "{{ cloud3 }}"

@@ -1,0 +1,19 @@
+---
+- name: Play for installing the Nginx
+  hosts: all
+  #remote_user: root
+  vars:
+    cloud1: "aws" 
+    cloud2: "azure"
+    cloud3: "gcp"
+  tasks: 
+  - name: performing apt update
+    shell:  apt update 
+  
+  - name: checking the free Memory
+    shell: free
+    register: FREE_MEMORY
+
+  - name: getting the registered value
+    debug:
+      var: FREE_MEMORY['stdout_lines']

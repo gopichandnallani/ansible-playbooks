@@ -1,0 +1,44 @@
+---
+- name: Play for installing the Nginx
+  hosts: all
+  tasks: 
+  - name: performing apt update
+    shell:  apt update 
+
+  - name: installing nginx
+    apt: >
+      name=nginx
+      state=present
+  - name: copying files to the server 
+    copy: 
+      src:  webpage-test/index.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+  - name: copying the files to server style.css
+    copy:
+      src: webpage-test/style.css
+      dest: /var/www/html/style.css
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+  - name: 
+    copy:
+      src: webpage-test/scorekeeper.js
+      dest: /var/www/html/scorekeepeer.js
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart nginx
+
+  handlers: 
+  - name: restart nginx
+    command: service nginx restart

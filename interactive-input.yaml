@@ -1,0 +1,13 @@
+---
+- name: play for testing the interactive Input
+  hosts: all
+  vars_prompt:
+    - name: role
+      prompt: enter your role in a previous company.
+      private: false
+      default: devops-engineer
+
+  tasks:
+    - name: print a messgae
+      debug: 
+        msg: 'working as a {{ role }}'
