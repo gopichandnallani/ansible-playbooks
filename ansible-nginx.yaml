@@ -5,7 +5,9 @@
   tasks: 
   - name: performing apt update
     shell:  apt update 
-
+# before running the script ake sure to clone the reository "https://github.com/gopichandnallani/webpage-test.git"
+# all the files that we are copying are in that repository.
+# clone in the local system where you are running the Ansible not on client machines.
   - name: installing nginx
     apt: >
       name=nginx
