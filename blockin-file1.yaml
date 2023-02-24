@@ -1,0 +1,30 @@
+- name: Gather facts and write IPv4 to file
+  hosts: all
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Write IPv4 to file
+      blockinfile:
+        create: true
+        path: /root/facts.txt
+        block: |
+          Ansible managed node IP is {{ ansible_default_ipv4.address }}
+    - name: Update package cache
+      package:
+        name: '*'
+        state: updated
+
+    - name: Install Apache HTTP server
+      package:
+        name: httpd
+        state: present
+        
+    - name: Start and enable Apache service
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+
+   - name: copying the facts.txt to the /var/www/html as a index.html
+     shell:
+       cmd: cp /root/facts.txt /var/www/html/index.html
